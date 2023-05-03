@@ -19,6 +19,7 @@ build:
 requirements:
   host:
     - pip
+    - wheel
     - python
     - poetry-core >=1.0.0
   run:
@@ -102,6 +103,7 @@ about:
   dev_url: https://github.com/hwchase17/langchain
   summary: Building applications with LLMs through composability
   license: MIT
+  license_family: MIT
   license_file: LICENSE
   description: LangChain is a framework for developing applications powered by language models (LLMs).
 
