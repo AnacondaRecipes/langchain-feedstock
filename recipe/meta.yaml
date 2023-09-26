@@ -40,8 +40,10 @@ requirements:
     - numexpr >=2.8.4,<3.0.0
     - langsmith >=0.0.38,<0.1.0
   run_constrained:
+    # from the conda-forge recipe https://github.com/conda-forge/langchain-feedstock/blob/191d7cdc5a4d6008bfb10f53bbf28798ad8c4fa6/recipe/meta.yaml#L42-L142
     - azure-core >=1.26.4,<2.0.0
     - tqdm >=4.48.0
+    - openapi-schema-pydantic >=1.2,<2.0.0
     - faiss-cpu >=1.0.0,<2.0.0
     - wikipedia >=1.0.0,<2.0.0
     - elasticsearch >=8.0.0,<9.0.0
