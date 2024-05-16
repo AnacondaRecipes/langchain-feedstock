@@ -13,8 +13,7 @@ build:
   number: 0
   skip: True # [py<38]
   script: 
-    - cp github-source/LICENSE LICENSE
-    - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+    - {{ PYTHON }} -m pip install ./libs/langchain -vv --no-deps --no-build-isolation
   entry_points:
     - langchain-server = langchain.server:main
 
