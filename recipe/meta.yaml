@@ -11,7 +11,7 @@ source:
 
 build:
   number: 0
-  skip: True # [py<39]
+  skip: True # [py<39 or s390x]
   script: 
     - {{ PYTHON }} -m pip install ./libs/langchain -vv --no-deps --no-build-isolation
   entry_points:
