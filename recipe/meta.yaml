@@ -12,7 +12,7 @@ source:
 build:
   number: 0
   # langsmith not available for s390x
-  skip: True # [py<38 or s390x]
+  skip: True  # [py<38 or s390x]
   script:
     - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   entry_points:
