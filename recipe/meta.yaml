@@ -1,5 +1,5 @@
 {% set name = "langchain" %}
-{% set version = "0.3.9" %}
+{% set version = "0.3.12" %}
 
 package:
   name: {{ name|lower }}
@@ -7,12 +7,12 @@ package:
 
 source:
   url: https://github.com/langchain-ai/langchain/archive/refs/tags/{{ name }}=={{ version }}.tar.gz
-  sha256: 0acf878e9a1ed85453262dec065c78060a50d71cc91f8ad6dc5792ba7debd3e6
+  sha256: e1a073c2cc96ef4920c599197e1ccbffca55624cf99d11f02871ae28eec07f96
 
 build:
   number: 0
   skip: True # [py<39 or s390x]
-  script: 
+  script:
     - {{ PYTHON }} -m pip install ./libs/langchain -vv --no-deps --no-build-isolation
   entry_points:
     - langchain-server = langchain.server:main
