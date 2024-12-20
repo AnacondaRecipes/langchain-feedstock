@@ -27,7 +27,7 @@ requirements:
     - async-timeout >=4.0.0,<5.0.0  # [py<311]
     - langchain-core >=0.3.25,<0.4.0
     - langchain-text-splitters >=0.3.3,<0.4.0
-    - langsmith >=0.1.17,<0.2.0
+    - langsmith >=0.1.17,<0.3.0
     - numpy >=1.22.4,<2.0.0  # [py<312]
     - numpy >=1.26.2,<3.0.0  # [py>=312]
     - pydantic >=2.7.4,<3.0.0
