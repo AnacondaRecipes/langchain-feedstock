@@ -6,14 +6,14 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/langchain-ai/langchain/archive/refs/tags/{{ name }}=={{ version }}.tar.gz
-  sha256: c3ea5fc14df9cd791fbf68a9b0f55928674006d64e229d4af0eb642f099cef09
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: a1d72aa39546a23db08492d7228464af35c9ee83379945535ceef877340d2a3a
 
 build:
   number: 0
   skip: True # [py<39]
   script:
-    - {{ PYTHON }} -m pip install ./libs/langchain -vv --no-deps --no-build-isolation
+    - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   entry_points:
     - langchain-server = langchain.server:main
 
