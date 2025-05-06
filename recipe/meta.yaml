@@ -21,21 +21,34 @@ requirements:
   host:
     - pip
     - python
-    - poetry-core >=1.0.0
+    - pdm-backend
   run:
-    - aiohttp >=3.8.3,<4.0.0
-    - async-timeout >=4.0.0,<5.0.0  # [py<311]
-    - langchain-core >=0.3.25,<0.4.0
-    - langchain-text-splitters >=0.3.3,<0.4.0
-    - langsmith >=0.1.17,<0.3.0
-    - numpy >=1.22.4,<2.0.0  # [py<312]
-    - numpy >=1.26.2,<3.0.0  # [py>=312]
-    - pydantic >=2.7.4,<3.0.0
-    - python
-    - pyyaml >=5.3
-    - requests >=2.0.0,<3.0.0
-    - sqlalchemy >=1.4,<3
-    - tenacity >=8.1.0,!=8.4.0,<10.0.0
+    - langchain-core <1.0.0,>=0.3.58
+    - langchain-text-splitters <1.0.0,>=0.3.8
+    - langsmith <0.4,>=0.1.17
+    - pydantic <3.0.0,>=2.7.4
+    - SQLAlchemy <3,>=1.4
+    - requests <3,>=2
+    - PyYAML >=5.3
+    - async-timeout <5.0.0,>=4.0.0  # [py<311]
+  run_constrained:
+    - langchain-community
+    - langchain-anthropic
+    - langchain-openai
+    - langchain-azure-ai
+    - langchain-cohere
+    - langchain-google-vertexai
+    - langchain-google-genai
+    - langchain-fireworks
+    - langchain-ollama
+    - langchain-together
+    - langchain-mistralai
+    - langchain-huggingface
+    - langchain-groq
+    - langchain-aws
+    - langchain-deepseek
+    - langchain-xai
+    - langchain-perplexity
 
 test:
   imports:
