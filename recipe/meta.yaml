@@ -32,24 +32,6 @@ requirements:
     - requests <3,>=2
     - PyYAML >=5.3
     - async-timeout <5.0.0,>=4.0.0  # [py<311]
-  run_constrained:
-    - langchain-community
-    - langchain-anthropic
-    - langchain-openai
-    - langchain-azure-ai
-    - langchain-cohere
-    - langchain-google-vertexai
-    - langchain-google-genai
-    - langchain-fireworks
-    - langchain-ollama
-    - langchain-together
-    - langchain-mistralai
-    - langchain-huggingface
-    - langchain-groq
-    - langchain-aws
-    - langchain-deepseek
-    - langchain-xai
-    - langchain-perplexity
 
 test:
   imports:
