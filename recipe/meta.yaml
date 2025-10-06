@@ -1,5 +1,5 @@
 {% set name = "langchain" %}
-{% set version = "0.3.25" %}
+{% set version = "0.3.27" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: a1d72aa39546a23db08492d7228464af35c9ee83379945535ceef877340d2a3a
+  sha256: aa6f1e6274ff055d0fd36254176770f356ed0a8994297d1df47df341953cec62
 
 build:
   number: 0
@@ -24,22 +24,77 @@ requirements:
     - pdm-backend
   run:
     - python
-    - langchain-core <1.0.0,>=0.3.58
-    - langchain-text-splitters <1.0.0,>=0.3.8
-    - langsmith <0.4,>=0.1.17
+    - langchain-core <1.0.0,>=0.3.72
+    - langchain-text-splitters <1.0.0,>=0.3.9
+    - langsmith >=0.1.17
     - pydantic <3.0.0,>=2.7.4
     - SQLAlchemy <3,>=1.4
     - requests <3,>=2
     - PyYAML >=5.3
     - async-timeout <5.0.0,>=4.0.0  # [py<311]
+  run_constrained:
+    - mypy <1.16,>=1.15
+    - types-pyyaml <7.0.0.0,>=6.0.12.2
+    - types-requests <3.0.0.0,>=2.28.11.5
+    - types-toml <1.0.0.0,>=0.10.8.1
+    - types-redis <5.0.0.0,>=4.3.21.6
+    - types-pytz <2024.0.0.0,>=2023.3.0.0
+    - types-chardet <6.0.0.0,>=5.0.4.6
+    - mypy-protobuf <4.0.0,>=3.0.0
+    - numpy >=1.26.4  # [py<313]
+    - numpy >=2.1.0  # [py>=313]
+
+# E   ModuleNotFoundError: No module named 'blockbuster'
+{% set ignore_tests = " --ignore=tests/unit_tests" %}
+# E   ModuleNotFoundError: No module named 'langchain_tests'
+{% set ignore_tests = ignore_tests + " --ignore=tests/integration_tests/chat_models/test_base.py" %}
+# E openai.OpenAIError: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+{% set ignore_tests = ignore_tests + " --ignore=tests/integration_tests/evaluation/embedding_distance/test_embedding.py" %}
+{% set tests_to_deselect = " --deselect=tests/integration_tests/embeddings/test_base.py::test_init_embedding_model" %}
+{% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/chains/openai_functions/test_openapi.py::test_openai_openapi_chain" %}
+{% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/retrievers/document_compressors/test_listwise_rerank.py::test_list_rerank" %}
+{% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/test_hub.py::test_hub_pull_private_prompt" %}
+# E ModuleNotFoundError: No module named 'cohere'
+{% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/retrievers/document_compressors/test_cohere_reranker.py::test_cohere_reranker_init" %}
 
 test:
+  source_files:
+    - tests
   imports:
-    - langchain
+  - langchain._api
+  - langchain.agents
+  - langchain.callbacks
+  - langchain.chains
+  - langchain.chat_models
+  - langchain.document_loaders
+  - langchain.embeddings
+  - langchain.evaluation
+  - langchain.globals
+  - langchain.indexes
+  - langchain.llms
+  - langchain.load
+  - langchain.memory
+  - langchain.output_parsers
+  - langchain.prompts
+  - langchain.retrievers
+  - langchain.runnables
+  - langchain.schema
+  - langchain.smith
+  - langchain.storage
+  - langchain.text_splitter
+  - langchain.tools
+  - langchain.utilities
+  - langchain.vectorstores
+  - langchain.utils
   requires:
     - pip
+    - pytest <9,>=8
+    - transformers
+    - langchain-openai
   commands:
     - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    - pytest -v tests {{ ignore_tests }} {{ tests_to_deselect }}
 
 about:
   home: https://github.com/langchain-ai/langchain
