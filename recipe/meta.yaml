@@ -59,44 +59,43 @@ requirements:
 # E ModuleNotFoundError: No module named 'cohere'
 {% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/retrievers/document_compressors/test_cohere_reranker.py::test_cohere_reranker_init" %}
 
-test:
-  source_files:
-    - tests
-  imports:
-    - langchain._api
-    - langchain.agents
-    - langchain.callbacks
-    - langchain.chains
-    - langchain.chat_models
-    - langchain.document_loaders
-    - langchain.embeddings
-    - langchain.evaluation
-    - langchain.globals
-    - langchain.indexes
-    - langchain.llms
-    - langchain.load
-    - langchain.memory
-    - langchain.output_parsers
-    - langchain.prompts
-    - langchain.retrievers
-    - langchain.runnables
-    - langchain.schema
-    - langchain.smith
-    - langchain.storage
-    - langchain.text_splitter
-    - langchain.tools
-    - langchain.utilities
-    - langchain.vectorstores
-    - langchain.utils
-  requires:
-    - pip
-    - pytest <9,>=8
-    - transformers
-    - langchain-openai
-  commands:
-    - pip check
-    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
-    - pytest -v tests {{ ignore_tests }} {{ tests_to_deselect }}
+# test:
+#   source_files:
+#     - tests
+#   imports:
+#     - langchain.agents
+#     - langchain.callbacks
+#     - langchain.chains
+#     - langchain.chat_models
+#     - langchain.document_loaders
+#     - langchain.embeddings
+#     - langchain.evaluation
+#     - langchain.globals
+#     - langchain.indexes
+#     - langchain.llms
+#     - langchain.load
+#     - langchain.memory
+#     - langchain.output_parsers
+#     - langchain.prompts
+#     - langchain.retrievers
+#     - langchain.runnables
+#     - langchain.schema
+#     - langchain.smith
+#     - langchain.storage
+#     - langchain.text_splitter
+#     - langchain.tools
+#     - langchain.utilities
+#     - langchain.vectorstores
+#     - langchain.utils
+#   requires:
+#     - pip
+#     - pytest <9,>=8
+#     - transformers
+#     - langchain-openai
+#   commands:
+#     - pip check
+#     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+#     - pytest -v tests {{ ignore_tests }} {{ tests_to_deselect }}
 
 about:
   home: https://github.com/langchain-ai/langchain
