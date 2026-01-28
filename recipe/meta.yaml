@@ -1,5 +1,5 @@
 {% set name = "langchain" %}
-{% set version = "1.2.6" %}
+{% set version = "1.2.7" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 7d46cbf719d860a16f6fc182d5d3de17453dda187f3d43e9c40ac352a5094fdd
+  sha256: ba40e8d5b069a22f7085f54f405973da3d87cfdebf116282e77c692271432ecb
 
 build:
   number: 0
@@ -24,9 +24,9 @@ requirements:
     - hatchling
   run:
     - python
-    - langchain-core >=1.2.5,<2.0.0
+    - langchain-core >=1.2.7,<2.0.0
     - langchain-text-splitters >=1.1.0,<2.0.0
-    - langsmith >=0.1.17
+    - langsmith >=0.1.17,<1.0.0
     - pydantic >=2.7.4,<3.0.0
     - SQLAlchemy >=1.4.0,<3.0.0
     - requests >=2.0.0,<3.0.0
@@ -99,8 +99,8 @@ requirements:
 
 about:
   home: https://github.com/langchain-ai/langchain
-  doc_url: https://python.langchain.com/
-  dev_url: https://github.com/hwchase17/langchain
+  doc_url: https://python.langchain.com
+  dev_url: https://github.com/langchain-ai/langchain/tree/master/libs/langchain_v1
   summary: Building applications with LLMs through composability
   description: |
     LangChain is a framework for developing applications powered by language models (LLMs).
