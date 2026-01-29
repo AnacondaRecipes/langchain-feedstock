@@ -10,7 +10,7 @@ source:
   sha256: 7d46cbf719d860a16f6fc182d5d3de17453dda187f3d43e9c40ac352a5094fdd
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<310]
   script:
     - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
@@ -32,8 +32,7 @@ requirements:
     - requests >=2.0.0,<3.0.0
     - PyYAML >=5.3.0,<7.0.0
     - async-timeout <5.0.0,>=4.0.0  # [py<311]
-    # Commented for first build because of cycle dependency
-    # - langgraph >=1.0.2,<1.1.0
+    - langgraph >=1.0.2,<1.1.0
   run_constrained:
     - mypy <1.16,>=1.15
     - types-pyyaml <7.0.0.0,>=6.0.12.2
@@ -56,46 +55,31 @@ requirements:
 {% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/chains/openai_functions/test_openapi.py::test_openai_openapi_chain" %}
 {% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/retrievers/document_compressors/test_listwise_rerank.py::test_list_rerank" %}
 {% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/test_hub.py::test_hub_pull_private_prompt" %}
+{% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/agents/middleware/test_shell_tool_integration.py::test_shell_tool_basic_execution[openai]" %}
 # E ModuleNotFoundError: No module named 'cohere'
 {% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/retrievers/document_compressors/test_cohere_reranker.py::test_cohere_reranker_init" %}
 
-# test:
-#   source_files:
-#     - tests
-#   imports:
-#     - langchain.agents
-#     - langchain.callbacks
-#     - langchain.chains
-#     - langchain.chat_models
-#     - langchain.document_loaders
-#     - langchain.embeddings
-#     - langchain.evaluation
-#     - langchain.globals
-#     - langchain.indexes
-#     - langchain.llms
-#     - langchain.load
-#     - langchain.memory
-#     - langchain.output_parsers
-#     - langchain.prompts
-#     - langchain.retrievers
-#     - langchain.runnables
-#     - langchain.schema
-#     - langchain.smith
-#     - langchain.storage
-#     - langchain.text_splitter
-#     - langchain.tools
-#     - langchain.utilities
-#     - langchain.vectorstores
-#     - langchain.utils
-#   requires:
-#     - pip
-#     - pytest <9,>=8
-#     - transformers
-#     - langchain-openai
-#   commands:
-#     - pip check
-#     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
-#     - pytest -v tests {{ ignore_tests }} {{ tests_to_deselect }}
+test:
+  source_files:
+    - tests
+  imports:
+    - langchain.agents
+    - langchain.chat_models
+    - langchain.embeddings
+    - langchain.messages
+    - langchain.tools
+    - langchain.rate_limiters
+  requires:
+    - pip
+    - pytest <9,>=8
+    - transformers
+    - sentencepiece
+    - python-dotenv
+    - langchain-openai
+  commands:
+    - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    - pytest -v tests {{ ignore_tests }} {{ tests_to_deselect }}
 
 about:
   home: https://github.com/langchain-ai/langchain
