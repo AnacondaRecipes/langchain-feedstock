@@ -33,8 +33,10 @@ requirements:
     - numpy >=1.26.4  # [py<313]
     - numpy >=2.1.0  # [py>=313]
 
+# benchmarks require pytest_benchmark and measure perf, not correctness — not appropriate for packaging CI
+{% set ignore_tests = " --ignore=tests/benchmarks" %}
 # E   ModuleNotFoundError: No module named 'blockbuster'
-{% set ignore_tests = " --ignore=tests/unit_tests" %}
+{% set ignore_tests = ignore_tests + " --ignore=tests/unit_tests" %}
 # E   ModuleNotFoundError: No module named 'langchain_tests'
 {% set ignore_tests = ignore_tests + " --ignore=tests/integration_tests/chat_models/test_base.py" %}
 # E openai.OpenAIError: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
