@@ -46,6 +46,8 @@ requirements:
 {% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/retrievers/document_compressors/test_listwise_rerank.py::test_list_rerank" %}
 {% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/test_hub.py::test_hub_pull_private_prompt" %}
 {% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/agents/middleware/test_shell_tool_integration.py::test_shell_tool_basic_execution[openai]" %}
+# E openai.OpenAIError: The api_key client option must be set
+{% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/agents/middleware/test_human_in_the_loop_integration.py::test_hitl_reject_does_not_retry[openai]" %}
 # E ModuleNotFoundError: No module named 'cohere'
 {% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/retrievers/document_compressors/test_cohere_reranker.py::test_cohere_reranker_init" %}
 
