@@ -30,26 +30,14 @@ requirements:
   run_constrained:
     - langchain-baseten >=0.2.0
 
-# benchmarks require pytest_benchmark and measure perf, not correctness — not appropriate for packaging CI
 # E   ModuleNotFoundError: No module named 'blockbuster'
 # E   ModuleNotFoundError: No module named 'langchain_tests'
-# E openai.OpenAIError: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
-# E openai.OpenAIError: The api_key client option must be set
-# E ModuleNotFoundError: No module named 'cohere'
-# {% set ignore_tests = " --ignore=tests/benchmarks" %}
-# {% set ignore_tests = ignore_tests + " --ignore=tests/unit_tests" %}
-# {% set ignore_tests = ignore_tests + " --ignore=tests/integration_tests/chat_models/test_base.py" %}
-# {% set ignore_tests = ignore_tests + " --ignore=tests/integration_tests/evaluation/embedding_distance/test_embedding.py" %}
-{% set tests_to_deselect = " --deselect=tests/integration_tests/embeddings/test_base.py::test_init_embedding_model" %}
-# {% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/chains/openai_functions/test_openapi.py::test_openai_openapi_chain" %}
-# {% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/retrievers/document_compressors/test_listwise_rerank.py::test_list_rerank" %}
-# {% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/test_hub.py::test_hub_pull_private_prompt" %}
-{% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/agents/middleware/test_shell_tool_integration.py::test_shell_tool_basic_execution[openai]" %}
-{% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/agents/middleware/test_human_in_the_loop_integration.py::test_hitl_reject_does_not_retry[openai]" %}
-# {% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/retrievers/document_compressors/test_cohere_reranker.py::test_cohere_reranker_init" %}
-
 {% set ignore_tests = " --ignore=tests/unit_tests" %}
 {% set ignore_tests = ignore_tests + " --ignore=tests/integration_tests/chat_models/test_base.py" %}
+# E openai.OpenAIError: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+# E openai.OpenAIError: The api_key client option must be set
+{% set tests_to_deselect = " --deselect=tests/integration_tests/agents/middleware/test_shell_tool_integration.py::test_shell_tool_basic_execution[openai]" %}
+{% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/agents/middleware/test_human_in_the_loop_integration.py::test_hitl_reject_does_not_retry[openai]" %}
 
 test:
   source_files:
@@ -72,7 +60,6 @@ test:
     - pytest-benchmark >=5.1.0,<6.0.0
     - toml >=0.10.2,<1.0.0
     - langchain-openai
-    - python-dotenv
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
