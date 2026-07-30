@@ -1,13 +1,13 @@
 {% set name = "langchain" %}
-{% set version = "1.3.11" %}
+{% set version = "1.3.14" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: f3cf9cd4d2329b1a03eb8fd92b9d73e4e58a4d52570d67725fc77fbe0f104b32
+  sha256: 1b6696c72ba3bbbce54d745e0180742c9f6ece8bbc59ed5a46c3e20b9a435929
 
 build:
   number: 0
@@ -24,27 +24,20 @@ requirements:
     - hatchling
   run:
     - python
-    - langchain-core >=1.4.7,<2.0.0
+    - langchain-core >=1.4.9,<2.0.0
     - langgraph >=1.2.5,<1.3.0
     - pydantic >=2.7.4,<3.0.0
+  run_constrained:
+    - langchain-baseten >=0.2.0
 
-# benchmarks require pytest_benchmark and measure perf, not correctness — not appropriate for packaging CI
-{% set ignore_tests = " --ignore=tests/benchmarks" %}
 # E   ModuleNotFoundError: No module named 'blockbuster'
-{% set ignore_tests = ignore_tests + " --ignore=tests/unit_tests" %}
 # E   ModuleNotFoundError: No module named 'langchain_tests'
+{% set ignore_tests = " --ignore=tests/unit_tests" %}
 {% set ignore_tests = ignore_tests + " --ignore=tests/integration_tests/chat_models/test_base.py" %}
 # E openai.OpenAIError: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
-{% set ignore_tests = ignore_tests + " --ignore=tests/integration_tests/evaluation/embedding_distance/test_embedding.py" %}
-{% set tests_to_deselect = " --deselect=tests/integration_tests/embeddings/test_base.py::test_init_embedding_model" %}
-{% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/chains/openai_functions/test_openapi.py::test_openai_openapi_chain" %}
-{% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/retrievers/document_compressors/test_listwise_rerank.py::test_list_rerank" %}
-{% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/test_hub.py::test_hub_pull_private_prompt" %}
-{% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/agents/middleware/test_shell_tool_integration.py::test_shell_tool_basic_execution[openai]" %}
 # E openai.OpenAIError: The api_key client option must be set
+{% set tests_to_deselect = " --deselect=tests/integration_tests/agents/middleware/test_shell_tool_integration.py::test_shell_tool_basic_execution[openai]" %}
 {% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/agents/middleware/test_human_in_the_loop_integration.py::test_hitl_reject_does_not_retry[openai]" %}
-# E ModuleNotFoundError: No module named 'cohere'
-{% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/retrievers/document_compressors/test_cohere_reranker.py::test_cohere_reranker_init" %}
 
 test:
   source_files:
@@ -58,15 +51,19 @@ test:
     - langchain.rate_limiters
   requires:
     - pip
-    - pytest <9,>=8
-    - transformers
-    - sentencepiece
-    - python-dotenv
+    - pytest >=9.0.3,<10.0.0
+    - pytest-cov >=4.0.0,<8.0.0
+    - pytest-asyncio >=1.3.0,<2.0.0
+    - pytest-socket >=0.6.0,<1.0.0
+    - pytest-xdist >=3.6.1,<4.0.0
+    - pytest-mock
+    - pytest-benchmark >=5.1.0,<6.0.0
+    - toml >=0.10.2,<1.0.0
     - langchain-openai
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
-    - pytest -v tests {{ ignore_tests }} {{ tests_to_deselect }}
+    - python -m pytest -vv tests {{ ignore_tests }} {{ tests_to_deselect }}
 
 about:
   home: https://github.com/langchain-ai/langchain
