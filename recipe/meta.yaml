@@ -1,14 +1,6 @@
 {% set name = "langchain" %}
 {% set version = "1.4.0" %}
-{% set ignore_tests = " --ignore=tests/unit_tests" %}
-{% set ignore_tests = ignore_tests + " --ignore=tests/integration_tests/chat_models/test_base.py" %}
-{% set tests_to_deselect = " --deselect=tests/integration_tests/agents/middleware/test_shell_tool_integration.py::test_shell_tool_basic_execution[openai]" %}
-{% set tests_to_deselect = 'tests_to_deselect + " --deselect=tests/integration_tests/agents/middleware/test_human_in_the_loop_integration.py::test_hitl_reject_does_not_retry[openai]"' %}
 
-# E   ModuleNotFoundError: No module named 'blockbuster'
-# E   ModuleNotFoundError: No module named 'langchain_tests'
-# E openai.OpenAIError: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
-# E openai.OpenAIError: The api_key client option must be set
 package:
   name: {{ name }}
   version: {{ version }}
@@ -19,7 +11,7 @@ source:
 
 build:
   number: 0
-  skip: true  # [py<3100]
+  skip: true  # [py<310]
   script:
     - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   entry_points:
@@ -38,6 +30,15 @@ requirements:
   run_constrained:
     - langchain-baseten >=0.2.0
     - fastmcp >=4.0.1,<5.0.0
+
+# E   ModuleNotFoundError: No module named 'blockbuster'
+# E   ModuleNotFoundError: No module named 'langchain_tests'
+{% set ignore_tests = " --ignore=tests/unit_tests" %}
+{% set ignore_tests = ignore_tests + " --ignore=tests/integration_tests/chat_models/test_base.py" %}
+# E openai.OpenAIError: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+# E openai.OpenAIError: The api_key client option must be set
+{% set tests_to_deselect = " --deselect=tests/integration_tests/agents/middleware/test_shell_tool_integration.py::test_shell_tool_basic_execution[openai]" %}
+{% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/agents/middleware/test_human_in_the_loop_integration.py::test_hitl_reject_does_not_retry[openai]" %}
 
 test:
   source_files:
