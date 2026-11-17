@@ -1,13 +1,21 @@
 {% set name = "langchain" %}
-{% set version = "1.4.7" %}
+{% set version = "1.5.0" %}
+{% set ignore_tests = " --ignore=tests/unit_tests" %}
+{% set ignore_tests = ignore_tests + " --ignore=tests/integration_tests/chat_models/test_base.py" %}
+{% set tests_to_deselect = " --deselect=tests/integration_tests/agents/middleware/test_shell_tool_integration.py::test_shell_tool_basic_execution[openai]" %}
+{% set tests_to_deselect = 'tests_to_deselect + " --deselect=tests/integration_tests/agents/middleware/test_human_in_the_loop_integration.py::test_hitl_reject_does_not_retry[openai]"' %}
 
+# E   ModuleNotFoundError: No module named 'blockbuster'
+# E   ModuleNotFoundError: No module named 'langchain_tests'
+# E openai.OpenAIError: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+# E openai.OpenAIError: The api_key client option must be set
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 818275348cd707f7fbbe92ece0a725c25823140a054cf29865f420e0200fa2af
+  sha256: 62b8d048847d7063cf769b39d32219c4a8ff8abc75f3ebfde461e65b9ff8ff49
 
 build:
   number: 0
@@ -30,15 +38,6 @@ requirements:
   run_constrained:
     - langchain-baseten >=0.2.0
     - fastmcp >=4.0.11,<5.0.0
-
-# E   ModuleNotFoundError: No module named 'blockbuster'
-# E   ModuleNotFoundError: No module named 'langchain_tests'
-{% set ignore_tests = " --ignore=tests/unit_tests" %}
-{% set ignore_tests = ignore_tests + " --ignore=tests/integration_tests/chat_models/test_base.py" %}
-# E openai.OpenAIError: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
-# E openai.OpenAIError: The api_key client option must be set
-{% set tests_to_deselect = " --deselect=tests/integration_tests/agents/middleware/test_shell_tool_integration.py::test_shell_tool_basic_execution[openai]" %}
-{% set tests_to_deselect = tests_to_deselect + " --deselect=tests/integration_tests/agents/middleware/test_human_in_the_loop_integration.py::test_hitl_reject_does_not_retry[openai]" %}
 
 test:
   source_files:
